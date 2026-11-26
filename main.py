@@ -14,16 +14,22 @@ REVIEW = (
 MAX_CHARS = 120
 
 
-def main() -> None:
-    line = REVIEW.strip()
-    if not line:
+def _validate(line: str) -> str:
+    """Check one review line against the competition gate and return it."""
+    text = line.strip()
+    if not text:
         raise SystemExit("review line is empty")
-    if "\n" in line or "\r" in line:
+    if "\n" in text or "\r" in text:
         raise SystemExit("review line must be a single line")
-    if len(line) > MAX_CHARS:
+    if len(text) > MAX_CHARS:
         raise SystemExit(
-            f"review line is {len(line)} chars, over the {MAX_CHARS} limit"
+            f"review line is {len(text)} chars, over the {MAX_CHARS} limit"
         )
+    return text
+
+
+def main() -> None:
+    line = _validate(REVIEW)
     import os
 
     os.makedirs("/output", exist_ok=True)
